@@ -153,6 +153,8 @@ def build_model():
     }    # These parameter values were tested:
          # 'vect__max_df': [0.5, 1.0] 
          # 'clf__estimator__n_estimators': [50, 100]
+         
+        #  ACTION - TO DO: pick the right Parameters after training in notebook 'ML prep' is over
 
     # Initialize GridSearch
     cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, n_jobs=-1)
@@ -232,6 +234,31 @@ def save_model(model, model_filepath):
 
 
 def main():
+    """
+    Main function to execute the sequence of operations for training a classifier.
+    
+    This function does the following:
+    1. Loads data from a specified database filepath.
+    2. Splits the data into training and testing sets.
+    3. Builds a machine learning model.
+    4. Trains the model using the training data.
+    5. Evaluates the model using the testing data.
+    6. Saves the trained model to a specified model filepath.
+    
+    Command Line Arguments:
+        1. Path to the SQLite database containing pre-processed data.
+        2. Path to save the trained model as a pickle file.
+    
+    Usage:
+        python train_classifier.py [database_filepath] [model_filepath]
+    
+    Example:
+        python train_classifier.py ../data/DisasterResponse.db classifier.pkl
+    
+    Returns:
+        None. Prints out the status of each step (loading, training, evaluating, saving) and saves the trained model.
+    """
+
     if len(sys.argv) == 3:
         database_filepath, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
