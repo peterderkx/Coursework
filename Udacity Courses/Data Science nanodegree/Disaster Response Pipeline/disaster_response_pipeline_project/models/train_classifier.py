@@ -2,6 +2,7 @@
 import sys
 import re
 import pickle
+import warnings
 
 # Third-party imports
 import pandas as pd
@@ -29,10 +30,12 @@ def load_data(database_filepath):
     """
     Load data from a SQLite database and return feature and target variables.
     
-    Parameters:
+    Args:
+    -----
     - database_filepath (str): Path to the SQLite database file.
     
     Returns:
+    --------
     - X (pd.Series): Messages as the feature.
     - Y (pd.DataFrame): Categories as the target variables.
     - category_names (pd.Index): Column names of Y.
@@ -60,9 +63,11 @@ def tokenize(text):
     Tokenizes text data
 
     Args:
+    -----------
     text str: Messages as text data
 
     Returns:
+    -----------
     clean_tokens list: Processed text after normalizing, tokenizing and lemmatizing
     """
 
@@ -86,35 +91,6 @@ def tokenize(text):
 
 
 def build_model():
-
-    pipeline = Pipeline([
-    ('vect', CountVectorizer(tokenizer=tokenize)),
-    ('tfidf', TfidfTransformer()),
-    ('clf', MultiOutputClassifier(RandomForestClassifier()))
-    ])
-
-    # I could do a GridSearch here. 
-    # But that will take a lot of time to run, I did that in the ML Pipeline Notebook.
-    # It is probably related to the fact that sklearn is a library that doesn't run on my (NVIDIA) GPU.
-    # So I took the best parameters that came out of the GridSearch here
-    # The code to repeat this again is here below if needed and could be tuned and/or included:
-
-    # Define parameters for GridSearch
-    parameters = {
-        'vect__max_df': [0.5, 1.0],        
-        'clf__estimator__n_estimators': [50, 100]
-
-        # these parameter values were tested:
-         # 'vect__max_df': [0.5, 1.0] 
-         # 'clf__estimator__n_estimators': [50, 100]
-    }
-
-    # Initialize GridSearch
-    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, n_jobs=-1)
-
-    return cv
-
-def build_model():
     """
     Build a machine learning pipeline and initialize grid search on the pipeline.
     
@@ -130,34 +106,23 @@ def build_model():
     cv: GridSearchCV object
         Initialized grid search object on the pipeline.
     """
-    
+    # Suppress all warnings
+    warnings.simplefilter("ignore")
+
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(RandomForestClassifier()))
     ])
 
-    # Comment on the GridSearch approach and the choice of parameters
-        # I could do a GridSearch here. 
-        # But that will take a lot of time to run, I did that in the ML Pipeline Notebook.
-        # It is probably related to the fact that sklearn is a library that doesn't run on my (NVIDIA) GPU.
-        # So I took the best parameters that came out of the GridSearch here
-        # The code to repeat this again is here below if needed and could be tuned and/or included:
-
-
     # Define parameters for GridSearch
+    # Regularization by increase minimum number of samples required at a leaf node to prevent overfitting
     parameters = {
-        'vect__max_df': [0.5, 1.0],
-        'clf__estimator__n_estimators': [50, 100]
-        # More parameters can be added/removed from here as needed.
-    }    # These parameter values were tested:
-         # 'vect__max_df': [0.5, 1.0] 
-         # 'clf__estimator__n_estimators': [50, 100]
-         
-        #  ACTION - TO DO: pick the right Parameters after training in notebook 'ML prep' is over
+        'clf__estimator__min_samples_leaf': [1, 2]    
+    }
 
-    # Initialize GridSearch
-    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, n_jobs=-1)
+    # Initialize GridSearch, limit cross validation to 3 fold to speed up gridsearch
+    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, cv=3)
 
     return cv
 
@@ -170,8 +135,8 @@ def evaluate_model(model, X_test, Y_test, category_names):
     evaluate the model's performance using precision, recall, and F1-score metrics.
     The evaluation results are then printed in a tabular format for each category.
 
-    Parameters:
-    -----------
+    Args:
+    -----
     model : estimator object
         The machine learning model to be evaluated.
 
@@ -203,6 +168,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     # Convert metrics list to a DataFrame
     metrics_df = pd.DataFrame(metrics_list, columns=['Category', 'Precision', 'Recall', 'F1-score'])
 
+    # print evaluation metrics
     print(metrics_df)
 
 
@@ -215,7 +181,7 @@ def save_model(model, model_filepath):
     and then saves the model to the specified file using pickle. This 
     allows the model to be loaded and used later without needing to be retrained.
 
-    Parameters:
+    Args:
     -----------
     model : estimator object
         The trained machine learning model to be saved.
@@ -256,6 +222,7 @@ def main():
         python train_classifier.py ../data/DisasterResponse.db classifier.pkl
     
     Returns:
+    --------    
         None. Prints out the status of each step (loading, training, evaluating, saving) and saves the trained model.
     """
 
