@@ -2,28 +2,33 @@
 import sys
 import re
 import pickle
-import warnings
 
-# Third-party imports
+# Libraries for data handling and storage
 import pandas as pd
 from sqlalchemy import create_engine
+import pickle
+
+# Text processing libraries
+import re
 import nltk
+nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger', 'stopwords'])
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
+
+# Machine learning libraries
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from sklearn.multioutput import MultiOutputClassifier
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.metrics import precision_recall_fscore_support
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.metrics import classification_report
 
-# Download necessary NLTK datasets
-nltk.download('punkt')
-nltk.download('wordnet')
-nltk.download('stopwords')
-nltk.download('averaged_perceptron_tagger')
+# Classifiers
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
 
+# Others
+import warnings
 
 
 def load_data(database_filepath):
@@ -106,8 +111,6 @@ def build_model():
     cv: GridSearchCV object
         Initialized grid search object on the pipeline.
     """
-    # Suppress all warnings
-    warnings.simplefilter("ignore")
 
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
@@ -115,7 +118,7 @@ def build_model():
         ('clf', MultiOutputClassifier(RandomForestClassifier()))
     ])
 
-    # I did this training already in NL pipeline Preparation
+    # I did this training already in 'ML pipeline Preparation' notebook
     # Training can take quite a while, hence I provide the code here but will run with optimized settings
 
     # Define parameters for GridSearch
@@ -127,7 +130,7 @@ def build_model():
 
     # Initialize GridSearch, limit cross validation to 3 fold to speed up gridsearch
     cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, cv=1)
-    # cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, cv=3) 3 fold cross validation was tested
+    # cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, cv=3) used 3 fold cross validation during testing
 
     return cv
 
@@ -136,46 +139,73 @@ def evaluate_model(model, X_test, Y_test, category_names):
     """
     Evaluate a machine learning model's performance on test data.
     
-    This function takes in a machine learning model, test data, and category names to 
-    evaluate the model's performance using precision, recall, and F1-score metrics.
-    The evaluation results are then printed in a tabular format for each category.
+    The report contains precision, recall, and F1-score for each class (0 and 1) 
+    and their weighted average for each category in the test dataset.
 
-    Args:
-    -----
-    model : estimator object
-        The machine learning model to be evaluated.
-
-    X_test : pd.Series or array-like
-        The test feature data.
-        
-    Y_test : pd.DataFrame or array-like
-        The actual labels for the test set.
-
-    category_names : list
-        List of strings indicating the names of the categories.
-        
+    Parameters:
+    - Y_test (pd.DataFrame): The true labels for each category.
+    - Y_pred (np.ndarray): Predicted labels from the model.
+    - pipeline (Pipeline): The machine learning pipeline used for predictions. 
+    
     Returns:
-    --------
-    None. This function only prints the evaluation results.
+    --------    
+    - df_reports: A dataframe containing precision, recall, and F1-score for each 
+                  class and their weighted averages for each category.
+
+    Notes:
+    - It makes use of the `classification_report` from sklearn.metrics.
+    - The dataframe will have columns for each metric for classes '0' and '1' and 
+      their weighted averages.
+    - Results are rounded to two decimal places.
     """
     
-    # Predict on the test set
-    Y_pred = model.predict(X_test)
+    # Predict on test data:
+    Y_pred = pipeline.predict(X_test)
 
-    # Collecting the metrics
-    metrics_list = []
+    # List to store the results for each category
+    reports = []
 
-    # Calculate and store the metrics for each output category
-    for i, column in enumerate(category_names):
-        precision, recall, fscore, _ = precision_recall_fscore_support(Y_test.iloc[:, i], Y_pred[:, i], average='weighted', zero_division=1)
-        metrics_list.append([column, precision, recall, fscore])
+    # Loop through each category
+    for i, col in enumerate(Y_test.columns):
+        
+        # Get the classification report for each column
+        report = classification_report(Y_test[col], Y_pred[:, i], zero_division=1, output_dict=True)
+        
+        # Extracting the metrics of interest
+        precision_0 = report['0']['precision'] if '0' in report else None
+        recall_0 = report['0']['recall'] if '0' in report else None
+        f1_0 = report['0']['f1-score'] if '0' in report else None
 
-    # Convert metrics list to a DataFrame
-    metrics_df = pd.DataFrame(metrics_list, columns=['Category', 'Precision', 'Recall', 'F1-score'])
+        precision_1 = report['1']['precision'] if '1' in report else None
+        recall_1 = report['1']['recall'] if '1' in report else None
+        f1_1 = report['1']['f1-score'] if '1' in report else None
 
-    # print evaluation metrics
-    print(metrics_df)
+        weighted_avg_precision = report['weighted avg']['precision']
+        weighted_avg_recall = report['weighted avg']['recall']
+        weighted_avg_f1 = report['weighted avg']['f1-score']
 
+        # Store the results in a dictionary
+        reports.append({
+            'Category': col,
+            'Precision_0': precision_0,
+            'Recall_0': recall_0,
+            'F1_0': f1_0,
+            'Precision_1': precision_1,
+            'Recall_1': recall_1,
+            'F1_1': f1_1,
+            'Weighted_Avg_Precision': weighted_avg_precision,
+            'Weighted_Avg_Recall': weighted_avg_recall,
+            'Weighted_Avg_F1': weighted_avg_f1
+        })
+
+        # Convert the results into a DataFrame
+        df_reports = pd.DataFrame(reports)
+        
+        # Round numbers to 2 digits 
+        df_reports = df_reports.round(2)
+
+        # Display results
+        print(df_reports)
 
 
 def save_model(model, model_filepath):
@@ -230,6 +260,9 @@ def main():
     --------    
         None. Prints out the status of each step (loading, training, evaluating, saving) and saves the trained model.
     """
+
+    # Suppress all warnings
+    warnings.simplefilter("ignore")
 
     if len(sys.argv) == 3:
         database_filepath, model_filepath = sys.argv[1:]
