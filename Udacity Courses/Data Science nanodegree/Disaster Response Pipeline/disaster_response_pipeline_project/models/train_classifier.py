@@ -115,14 +115,19 @@ def build_model():
         ('clf', MultiOutputClassifier(RandomForestClassifier()))
     ])
 
+    # I did this training already in NL pipeline Preparation
+    # Training can take quite a while, hence I provide the code here but will run with optimized settings
+
     # Define parameters for GridSearch
     # Regularization by increase minimum number of samples required at a leaf node to prevent overfitting
     parameters = {
-        'clf__estimator__min_samples_leaf': [1, 2]    
+        'clf__estimator__min_samples_leaf': [1] 
+        # 'clf__estimator__min_samples_leaf': [1, 2] were tested    
     }
 
     # Initialize GridSearch, limit cross validation to 3 fold to speed up gridsearch
-    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, cv=3)
+    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, cv=1)
+    # cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, cv=3) 3 fold cross validation was tested
 
     return cv
 
