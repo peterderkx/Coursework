@@ -25,7 +25,7 @@ from sklearn.metrics import classification_report
 
 # Classifiers
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import AdaBoostClassifier
 
 # Others
 import warnings
@@ -102,7 +102,7 @@ def build_model():
     This function constructs a pipeline that:
     1. Vectorizes the input text data using CountVectorizer with a custom tokenizer.
     2. Transforms the vectorized data using TfidfTransformer.
-    3. Uses a MultiOutputClassifier with a RandomForestClassifier as the estimator for classification.
+    3. Uses a MultiOutputClassifier with a AdaBoostClassifier as the estimator for classification.
     
     Grid search is then initialized on this pipeline to find the best parameters from a given set.
     
@@ -115,23 +115,18 @@ def build_model():
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
-        ('clf', MultiOutputClassifier(RandomForestClassifier()))
+        ('clf', MultiOutputClassifier(AdaBoostClassifier()))
     ])
 
-    # I did this training already in 'ML pipeline Preparation' notebook
-    # Training can take quite a while, hence I provide the code here but will run with optimized settings
-
-    # Define parameters for GridSearch
-    # Regularization by increase minimum number of samples required at a leaf node to prevent overfitting
+    # Define parameters for GridSearch, with other features besides tfidf:
     parameters = {
-        'clf__estimator__min_samples_leaf': [1] 
-        # 'clf__estimator__min_samples_leaf': [1, 2] were tested    
-    }
+        'clf__estimator__learning_rate': [0.2, 0.5],
+        'clf__estimator__n_estimators': [10, 20, 30]
+      }
 
-    # Initialize GridSearch, limit cross validation to 3 fold to speed up gridsearch
-    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, cv=1)
-    # cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, cv=3) used 3 fold cross validation during testing
-
+    # Initialize GridSearch, limit cross validation to 3 fold
+    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, cv=3)
+    
     return cv
 
 
@@ -145,7 +140,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     Parameters:
     - Y_test (pd.DataFrame): The true labels for each category.
     - Y_pred (np.ndarray): Predicted labels from the model.
-    - pipeline (Pipeline): The machine learning pipeline used for predictions. 
+    - model: The machine learning pipeline used for predictions. 
     
     Returns:
     --------    
@@ -160,7 +155,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     """
     
     # Predict on test data:
-    Y_pred = pipeline.predict(X_test)
+    Y_pred = model.predict(X_test)
 
     # List to store the results for each category
     reports = []
@@ -198,14 +193,14 @@ def evaluate_model(model, X_test, Y_test, category_names):
             'Weighted_Avg_F1': weighted_avg_f1
         })
 
-        # Convert the results into a DataFrame
-        df_reports = pd.DataFrame(reports)
-        
-        # Round numbers to 2 digits 
-        df_reports = df_reports.round(2)
+    # Convert the results into a DataFrame
+    df_reports = pd.DataFrame(reports)
+    
+    # Round numbers to 2 digits 
+    df_reports = df_reports.round(2)
 
-        # Display results
-        print(df_reports)
+    # Display results
+    print(df_reports)
 
 
 def save_model(model, model_filepath):
@@ -254,7 +249,7 @@ def main():
         python train_classifier.py [database_filepath] [model_filepath]
     
     Example:
-        python train_classifier.py ../data/DisasterResponse.db classifier.pkl
+        python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl
     
     Returns:
     --------    
