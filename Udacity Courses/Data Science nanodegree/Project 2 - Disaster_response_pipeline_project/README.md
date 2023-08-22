@@ -21,6 +21,8 @@ This project is a component of Udacity's Data Scientist Nanodegree Program, crea
 - **classifier.pkl** - A pickle file containing the trained model.<br/>
 - **ML Pipeline Preparation.ipynb** - A Jupyter Notebook utilized for the development and preparation of the ML pipeline.
 
+### Folder: screenshots
+- screenshots of the application and training, please see remarks below as well
 ## Installation
 No additional libraries beyond those included in the Anaconda distribution should be necessary for installation. The code should run without any problems using Python 3.5 or later versions.
 
@@ -42,15 +44,15 @@ Thanks to Figure Eight for supplying the dataset that enabled me to train my mod
 
 ## Screenshots
 - The main page displays an overview of the Training Dataset and the Distribution of Message Categories.<br/>
-![image]() <br/>
+![image](https://github.com/peterderkx/Coursework/blob/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project/screenshots/20230814%20-%20app%20screenshot%201.PNG) <br/>
 - To classify a message, enter the message and click on the 'Classify Message' button. <br/>
-![image]() <br/>
+![image](https://github.com/peterderkx/Coursework/blob/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project/screenshots/20230814%20-%20app%20screenshot%202.PNG) <br/>
 - After clicking 'Classify Message', the category or categories to which the message belongs will be highlighted in green. <br/>
-![image]() <br/>
+![image](https://github.com/peterderkx/Coursework/blob/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project/screenshots/20230814%20-%20app%20screenshot%203.PNG) <br/>
 - Execute the process_data.py script to run the ETL pipeline. <br/>
 ![image](https://github.com/peterderkx/Coursework/blob/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project/screenshots/20230814%20-%20ETL%20screenshot.PNG) <br/>
 - Execute the train_classifier.py script to run the ML pipeline. <br/>
 ![image](https://github.com/peterderkx/Coursework/blob/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project/screenshots/20230814%20-%20classifier%20screenshot%201.PNG) <br/>
 ![image](https://github.com/peterderkx/Coursework/blob/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project/screenshots/20230814%20-%20classifier%20screenshot%202.PNG)
 - In the app's directory, run the run.py script to launch the web application. <br/>
-![image]() <br/>
+![image](https://github.com/peterderkx/Coursework/blob/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project/screenshots/20230814%20-%20app%20screenshot%204.PNG) <br/>
