@@ -48,8 +48,9 @@ Thanks to Figure Eight for supplying the dataset that enabled me to train my mod
 - After clicking 'Classify Message', the category or categories to which the message belongs will be highlighted in green. <br/>
 ![image]() <br/>
 - Execute the process_data.py script to run the ETL pipeline. <br/>
-![image]() <br/>
+![image](https://github.com/peterderkx/Coursework/blob/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project/screenshots/20230814%20-%20ETL%20screenshot.PNG) <br/>
 - Execute the train_classifier.py script to run the ML pipeline. <br/>
-![image]() <br/>
+![image](https://github.com/peterderkx/Coursework/blob/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project/screenshots/20230814%20-%20classifier%20screenshot%201.PNG) <br/>
+![image](https://github.com/peterderkx/Coursework/blob/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project/screenshots/20230814%20-%20classifier%20screenshot%202.PNG)
 - In the app's directory, run the run.py script to launch the web application. <br/>
 ![image]() <br/>
