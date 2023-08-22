@@ -1,4 +1,11 @@
 # Disaster Response Pipeline Project
+## Table of Contents
+- [Introduction](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project#introduction)
+- [File Descriptions](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project#file-descriptions)
+- [Installation](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project#installation)
+- [Instructions](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project#instructions)
+- [Acknowledgements](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project#acknowledgements)
+- [Screenshots](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project#screenshots)
 
 ## Introduction
 This project is a component of Udacity's Data Scientist Nanodegree Program, created in partnership with [Figure Eight](https://www.figure-eight.com/). It involves the development of a disaster response model that leverages pre-labeled disaster messages to categorize real-time messages during a disaster event, ensuring that they are directed to the appropriate response agency. Additionally, this project features a web application through which disaster response personnel can input incoming messages and receive classification results.
