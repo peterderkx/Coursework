@@ -3,6 +3,8 @@
 ## Introduction
 This project is a component of Udacity's Data Scientist Nanodegree Program, created in partnership with [Figure Eight](https://www.figure-eight.com/). It involves the development of a disaster response model that leverages pre-labeled disaster messages to categorize real-time messages during a disaster event, ensuring that they are directed to the appropriate response agency. Additionally, this project features a web application through which disaster response personnel can input incoming messages and receive classification results.
 
+For the 'rescue center' under consideration, it is likely that recall is prioritized to ensure no one in need is left behind. However, high precision is equally important to avoid wasting resources on false alarms. The relative importance of these metrics can shift depending on the specific circumstances and available resources. Ideally, striking a balance between recall and precision will allow for efficient resource allocation while still addressing genuine emergencies. The data provided shows marked improvements in recall scores for crucial rescue service categories, indicating better detection of general aid needs. There are also significant advancements in the identification of critical essentials. In summary, the new system shows enhanced effectiveness in recognizing rescue needs.
+
 ## File Descriptions
 
 ### Folder: app
