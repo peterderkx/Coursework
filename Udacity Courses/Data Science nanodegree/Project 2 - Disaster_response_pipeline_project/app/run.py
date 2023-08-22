@@ -12,6 +12,7 @@ from plotly.graph_objs import Bar
 # from sklearn.externals import joblib
 from sqlalchemy import create_engine
 
+
 app = Flask(__name__)
 
 def tokenize(text):
@@ -43,28 +44,84 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    # Ignore first four columns ('id', 'message', 'original', 'genre')
+    category_data = df.drop(columns=['id', 'message', 'original', 'genre'])
+
+    # Extract category names
+    category_names = category_data.columns
+
+    # Count non-zero entries for each category
+    category_counts = category_data.apply(lambda x: (x != 0).sum())
+        
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
-    graphs = [
-        {
-            'data': [
-                Bar(
-                    x=genre_names,
-                    y=genre_counts
-                )
-            ],
+#     graphs = [
+#         {
+#             'data': [
+#                 Bar(
+#                     x=genre_names,
+#                     y=genre_counts
+#                 )
+#             ],
 
+#             'layout': {
+#                 'title': 'Distribution of Message Genres',
+#                 'yaxis': {
+#                     'title': "Count"
+#                 },
+#                 'xaxis': {
+#                     'title': "Genre"
+#                 }
+#             }
+#         },
+#                     'data': [
+#                 Bar(
+#                     x=category_names,
+#                     y=category_counts
+#                 )
+#             ],
+
+#             'layout': {
+#                 'title': 'Distribution of Message Categories',
+#                 'yaxis': {
+#                     'title': "Count"
+#                 },
+#                 'xaxis': {
+#                     'title': "Category"
+#                 }
+#             }
+#         }
+#     ]
+    
+    def create_bar_graph(x_data, y_data, title, x_title, y_title="Count"):
+        """
+        Create a configuration for a bar graph suitable for Plotly.
+
+        Parameters:
+        - x_data (list): Data for the x-axis.
+        - y_data (list): Data for the y-axis.
+        - title (str): Title of the graph.
+        - x_title (str): Title of the x-axis.
+        - y_title (str, optional): Title of the y-axis. Defaults to "Count".
+
+        Returns:
+        - dict: A dictionary containing the configuration for the bar graph.
+        """
+
+        return {
+            'data': [Bar(x=x_data, y=y_data)],
             'layout': {
-                'title': 'Distribution of Message Genres',
-                'yaxis': {
-                    'title': "Count"
-                },
-                'xaxis': {
-                    'title': "Genre"
-                }
+                'title': title,
+                'yaxis': {'title': y_title},
+                'xaxis': {'title': x_title}
             }
         }
+
+    graphs = [
+        create_bar_graph(genre_names, genre_counts, 'Distribution of Message Genres', 'Genre'),
+        create_bar_graph(category_names, category_counts, 'Distribution of Message Categories', 'Category')
     ]
+
     
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
@@ -93,7 +150,7 @@ def go():
 
 
 def main():
-    app.run(host='0.0.0.0', port=3001, debug=True)
+    app.run(host='0.0.0.0', port=3000, debug=True)
 
 
 if __name__ == '__main__':

@@ -2,6 +2,8 @@
 import sys
 import re
 import pickle
+import joblib
+
 
 # Libraries for data handling and storage
 import pandas as pd
@@ -21,7 +23,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.multioutput import MultiOutputClassifier
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, precision_score
+# from sklearn.externals import joblib
 
 # Classifiers
 from sklearn.neighbors import KNeighborsClassifier
@@ -120,12 +123,14 @@ def build_model():
 
     # Define parameters for GridSearch, with other features besides tfidf:
     parameters = {
-        'clf__estimator__learning_rate': [0.2, 0.5],
-        'clf__estimator__n_estimators': [10, 20, 30]
+#         'clf__estimator__learning_rate': [0.2],
+#         'clf__estimator__n_estimators': [10]
+        'clf__estimator__learning_rate': [0.3, 0.5],
+        'clf__estimator__n_estimators': [10, 20]
       }
 
     # Initialize GridSearch, limit cross validation to 3 fold
-    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, cv=3)
+    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3, cv=2)
     
     return cv
 
@@ -164,7 +169,13 @@ def evaluate_model(model, X_test, Y_test, category_names):
     for i, col in enumerate(Y_test.columns):
         
         # Get the classification report for each column
-        report = classification_report(Y_test[col], Y_pred[:, i], zero_division=1, output_dict=True)
+        try:
+            report = classification_report(Y_test[col], Y_pred[:, i], output_dict=True)
+        except ValueError:
+            precision = precision_score(Y_test[col], Y_pred[:, i])
+            if precision == 0:
+                # Manually set precision to a value when it's 0
+                precision = 1
         
         # Extracting the metrics of interest
         precision_0 = report['0']['precision'] if '0' in report else None
