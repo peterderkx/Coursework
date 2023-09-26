@@ -54,5 +54,5 @@ No specific installations are required, all libraries are imported, you might ne
 Thanks to LangChain, Gradio and OpenAI for providing the necessary guidance on how to create such a bot
 
 ## Screenshots
-- The main page displays an overview of the Training Dataset and the Distribution of Message Categories.<br/>
+- Screenshot of the chatbot. Please check the video as well for a better demo<br/>
 ![image](https://github.com/peterderkx/Coursework/blob/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%204%20-%20Chatbot%204%20own%20data/screenshot%20chatbot%204%20own%20data.png) <br/>
