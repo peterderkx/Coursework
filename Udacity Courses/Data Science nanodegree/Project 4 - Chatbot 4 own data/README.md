@@ -37,7 +37,7 @@ A demo video is uploaded as well to show the chatbot in action.
 - **requirements.txt** - list of required packages to install
 
 ## Installation
-Certain installation are required, but all can be found in the requirements.txt file
+No specific installations are required, all libraries are imported, you might need to pip install them depending on whether you have already installed them before.
 
 ## Instructions
 1. Run the following commands in the project's root directory if you need to create embeddings of your data. In order to save time they have already been created and saved for you, but if you want to add new data files, then you can do so.
