@@ -1,11 +1,11 @@
 # Chatbot 4 own data
 ## Table of Contents
-- [Introduction](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project#introduction)
-- [File Descriptions](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project#file-descriptions)
-- [Installation](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project#installation)
-- [Instructions](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project#instructions)
-- [Acknowledgements](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project#acknowledgements)
-- [Screenshots](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project#screenshots)
+- [Introduction](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%204%20-%20Chatbot%204%20own%20data#introduction)
+- [File Descriptions](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%204%20-%20Chatbot%204%20own%20data#file-descriptions)
+- [Installation](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%204%20-%20Chatbot%204%20own%20data#installation)
+- [Instructions](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%204%20-%20Chatbot%204%20own%20data#instructions)
+- [Acknowledgements](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%204%20-%20Chatbot%204%20own%20data#acknowledgements)
+- [Screenshots](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%204%20-%20Chatbot%204%20own%20data#screenshots)
 
 ## Introduction
 This repository is created to create a chatbot on your own data and a user interface built with [Gradio](https://www.gradio.app/).
