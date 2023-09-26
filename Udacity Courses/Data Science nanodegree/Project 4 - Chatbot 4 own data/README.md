@@ -11,7 +11,8 @@
 This repository is created to create a chatbot on your own data and a user interface built with [Gradio](https://www.gradio.app/).
 The chatbot will also return the reference docs and pages.
 
-You would need a openAI key to interact with their API engine, please visit [openAI](https://openai.com/)
+You would need a openAI key to interact with their API engine, please visit [openAI](https://openai.com/).
+Once you have a key, save it in the .env file
 
 I stored my files in the docs folder. The files are (publicly published) Shell annual and sustainability reports.
 To load, embed and save mebddings, a seperate file is created, please see below. As such the costly part of creating embddings is already done. The load of the vectorstore is done in the app.py
@@ -35,6 +36,7 @@ A demo video is uploaded as well to show the chatbot in action.
 - **vectorsore.pkl** - pickle file with a vecorstore of saved embeddings that can be used for retrieval after loading
 - **demo video.mkv** - video file that demonstrates the use of the chatbot
 - **requirements.txt** - list of required packages to install
+- **.env** - file that contains the openAI key. Use your own key as there are costs involved upon usage
 
 ## Installation
 No specific installations are required, all libraries are imported, you might need to pip install them depending on whether you have already installed them before.
