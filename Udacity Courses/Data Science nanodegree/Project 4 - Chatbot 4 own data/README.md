@@ -9,6 +9,8 @@
 
 ## Introduction
 This repository is created to create a chatbot on your own data and a user interface built with [Gradio](https://www.gradio.app/).
+The chatbot will also return the reference docs and pages.
+
 You would need a openAI key to interact with their API engine, please visit [openAI](https://openai.com/)
 
 I stored my files in the docs folder. The files are (publicly published) Shell annual and sustainability reports.
@@ -18,7 +20,9 @@ In essence the following process is followed in this file:
 - load data, split data into chunks, create (vector) embeddings of chunks with FAISS, save vectorstore
 
 Then to run the app the following process is followed in the app.py file:
-- load vectorstore, create template for prompt, create agent for extraction which has a conversation buffer for memmory, gradio UI that keeps track of conversation and streams responses
+- load vectorstore, create template for prompt, create agent for extraction which has a conversation buffer for memory, gradio UI that keeps track of conversation and streams responses
+
+A demo video is uploaded as well to show the chatbot in action.
 
 ## File Descriptions
 
