@@ -25,7 +25,7 @@ Then to run the app the following process is followed in the app.py file:
 ### Folder: docs
 - Folder: Contains the own data I want to access with the Chatbot. 
 
-### Folder: data
+### files
 - **load_data_save_embed.py** - python file for loading data, generate embeddings and save data into a vectorstore for retrieval
 - **app.py** - python file that upon running will open the chatbot that allows you to interact with your data
 - **vectorsore.pkl** - pickle file with a vecorstore of saved embeddings that can be used for retrieval after loading
@@ -33,7 +33,7 @@ Then to run the app the following process is followed in the app.py file:
 - **requirements.txt** - list of required packages to install
 
 ## Installation
-Cetain installation are required, but all can be found in the requirements.txt file
+Certain installation are required, but all can be found in the requirements.txt file
 
 ## Instructions
 1. Run the following commands in the project's root directory if you need to create embeddings of your data. In order to save time they have already been created and saved for you, but if you want to add new data files, then you can do so.
@@ -44,11 +44,11 @@ Cetain installation are required, but all can be found in the requirements.txt f
 2. Run the following command in the app's directory to run your web app.
     `python app.py`
 
-3. Go to http://127.0.0.1:7860 or another link that will be provided in the terminal (gradio standard)
+3. Go to http://127.0.0.1:7860 or another link that will be provided in the terminal (Gradio standard)
 
 ## Acknowledgements:
 Thanks to LangChain, Gradio and OpenAI for providing the necessary guidance on how to create such a bot
 
 ## Screenshots
 - The main page displays an overview of the Training Dataset and the Distribution of Message Categories.<br/>
-![image](https://github.com/peterderkx/Coursework/blob/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%202%20-%20Disaster_response_pipeline_project/screenshots/20230814%20-%20app%20screenshot%201.PNG) <br/>
+![image](https://github.com/peterderkx/Coursework/blob/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%204%20-%20Chatbot%204%20own%20data/screenshot%20chatbot%204%20own%20data.png) <br/>
