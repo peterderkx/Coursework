@@ -37,6 +37,7 @@ A demo video is uploaded as well to show the chatbot in action.
 - **demo video.mkv** - video file that demonstrates the use of the chatbot
 - **requirements.txt** - list of required packages to install
 - **.env** - file that contains the openAI key. Use your own key as there are costs involved upon usage
+- **qa for testing.xlxs** - list of questions to test and validate the chatbot
 
 ## Installation
 No specific installations are required, all libraries are imported, you might need to pip install them depending on whether you have already installed them before.
