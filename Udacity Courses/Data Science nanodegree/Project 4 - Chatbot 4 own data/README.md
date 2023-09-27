@@ -48,7 +48,7 @@ No specific installations are required, all libraries are imported, you might ne
     - To load and save embeddings:
         `load_data_save_embed.py`
 
-2. Run the following command in the app's directory to run your web app.
+2. Run the following command in the app's directory to run your chatbot (Gradio app).
     `python app.py`
 
 3. Go to http://127.0.0.1:7860 or another link that will be provided in the terminal (Gradio standard)
