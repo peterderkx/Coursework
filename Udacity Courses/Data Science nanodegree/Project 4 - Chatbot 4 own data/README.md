@@ -1,4 +1,4 @@
-# Chatbot 4 own data
+# Chatbot with own data
 ## Table of Contents
 - [Introduction](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%204%20-%20Chatbot%204%20own%20data#introduction)
 - [File Descriptions](https://github.com/peterderkx/Coursework/tree/main/Udacity%20Courses/Data%20Science%20nanodegree/Project%204%20-%20Chatbot%204%20own%20data#file-descriptions)
@@ -24,6 +24,8 @@ Then to run the app the following process is followed in the app.py file:
 - load vectorstore, create template for prompt, create agent for extraction which has a conversation buffer for memory, gradio UI that keeps track of conversation and streams responses
 
 A demo video is uploaded as well to show the chatbot in action.
+
+Please see this [medium post](https://medium.com/@peterderkx/chat-with-your-own-data-f3fbe35f02d3) as well for a blog about this project.
 
 ## File Descriptions
 
